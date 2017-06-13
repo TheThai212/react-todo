@@ -1,23 +1,42 @@
-var $ = require('jquery')
+var $ = require('jquery');
+
 module.exports = {
-  setTodos:function(todos){
-    if($.isArray(todos)){
-      localStorage.setItem('todos',JSON.toString(todos));
+  setTodos: function (todos) {
+    if ($.isArray(todos)) {
+      localStorage.setItem('todos', JSON.stringify(todos));
       return todos;
     }
-
   },
-  getTodos:function(){
+  getTodos: function () {
     var stringTodos = localStorage.getItem('todos');
     var todos = [];
+
     try {
       todos = JSON.parse(stringTodos);
     } catch (e) {
 
     }
 
-    // neu todos la array thi thuc hien lenh sau dau '?' sai thi thuc hien sau ':'
     return $.isArray(todos) ? todos : [];
+  },
+  filterTodos: function (todos, showCompleted, searchText) {
+    var filteredTodos = todos;
+
+    // Filter by showCompleted
+    filteredTodos = filteredTodos.filter((todo) => {
+      return !todo.completed || showCompleted;
+    });
+
+    // Filter by searchText
+
+    // Sort todos with non-completed first
+
+    return filteredTodos;
+  }
+};
+
+    // neu todos la array thi thuc hien lenh sau dau '?' sai thi thuc hien sau ':'
+    // return $.isArray(todos) ? todos : [];
 
     //code duoi day tuong tu dong 20
     // if($.isArray(todos)){
@@ -25,5 +44,3 @@ module.exports = {
     // }else{
     //   return [];
     // }
-  }
-};
