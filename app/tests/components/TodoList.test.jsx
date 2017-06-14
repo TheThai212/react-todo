@@ -1,28 +1,36 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var TestUtils =require('react-addons-test-utils');
+var TestUtils = require('react-addons-test-utils');
 var expect = require('expect');
 var $ = require('jquery');
 
 var TodoList = require('TodoList');
 var Todo = require('Todo');
 
-describe('TodoList',() =>{
-  it('should exits',() =>{
+describe('TodoList', () => {
+  it('should exist', () => {
     expect(TodoList).toExist();
   });
 
-it('should render one Todo Component for each todo item',() =>  {
+  it('should render one Todo component for each todo item', () => {
     var todos = [{
-      id:1,
-      text:'Do something'
-    },{
-      id:2,
-      text:'check mail '
+      id: 1,
+      text: 'Do something'
+    }, {
+      id: 2,
+      text: 'Check mail'
     }];
     var todoList = TestUtils.renderIntoDocument(<TodoList todos={todos}/>);
-    var todoComponents = TestUtils.scryRenderedComponentsWithType(todoList,Todo);
+    var todosComponents = TestUtils.scryRenderedComponentsWithType(todoList, Todo);
 
-    expect(todoComponents.length).toBe(todos.length);
+    expect(todosComponents.length).toBe(todos.length);
+  });
+
+  it('should render empty message if no todos', () => {
+    var todos = [];
+    var todoList = TestUtils.renderIntoDocument(<TodoList todos={todos}/>);
+    var $el = $(ReactDOM.findDOMNode(todoList));
+
+    expect($el.find('.container__message').length).toBe(1);
   });
 });
